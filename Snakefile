@@ -1,7 +1,14 @@
 
-my_path = "/home/hanaz63/nobackup/membrane_things/POPC_with_F13/version2/"
+#my_path = "/home/hanaz63/nobackup/membrane_things/POPC_with_F13/version2/"
+my_path = "/home/hanaz63/nobackup/membrane_things/POPC_with_C12/version2/"
 
 DENSITY_CATEGORIES = file_name=["PC", "PA", "OL", "pept"]
+
+rule make_all:
+    input:
+        f"{my_path}density_z_axis.png",
+        f"{my_path}along_traj.png"
+
 
 rule make_membrane_density_plot:
     input:
@@ -33,3 +40,30 @@ rule get_membrane_width:
 
         membrane_width = abs(position_max1)+abs(position_max2)
         print(f"Average membrane width is {membrane_width} nm.")
+
+
+TRAJECTORY_FILES = ["arg", "tag", "memb_u", "memb_l"]
+rule position_of_polypeptide_in_time:
+    input:
+        xvg_files = [f"{my_path}{what}.xvg" for what in TRAJECTORY_FILES]
+    output:
+        plot = f"{my_path}along_traj.png"
+    run:
+        from readers_writers import read_xvg
+        import matplotlib.pyplot as plt
+        import seaborn as sns
+
+        sns.set_context("paper")
+        sns.set_style("whitegrid")
+        sns.set_palette("hls",5)
+        fig, ax = plt.subplots(1,1)
+
+        colors = ["red", "blue", "black", "black"]
+
+        for input_file, label, color in zip(input.xvg_files, TRAJECTORY_FILES, colors):
+            df = read_xvg(input_file)
+            df.columns = ["Frame", "Position x [nm]", "Position y [nm]", "Position z [nm]"]
+            df.plot.scatter(x="Frame", y="Position z [nm]",  s=1, c=color, ax=ax, label=label)
+
+        plt.savefig(output.plot, dpi=600)
+
