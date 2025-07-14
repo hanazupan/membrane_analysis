@@ -1,0 +1,17 @@
+path: "/home/hanaz63/nobackup/membrane_things/BIGGER_POPC/"
+replicas: ["three_C12", "three_C12_replica2", "three_C12_replica3"]
+use_productions: ["production", "production2"]  #, "production3", "production4"
+index_file:
+  non_water: 20
+  argenine: 7
+  tag: 25
+  upper_memb: 30
+  lower_memb: 31
+  OL: 4
+  PA: 2
+  PC: 3
+  MEMB: 28
+  peptid: 29
+  pep1: 32
+  pep2: 33
+  pep3: 34

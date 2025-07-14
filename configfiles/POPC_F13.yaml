@@ -1,0 +1,13 @@
+path: "/home/hanaz63/nobackup/membrane_things/POPC_with_C12/version2/"
+use_productions: ["production", "production2", "production3", "production4"]
+index_file:
+  non_water: 20
+  argenine: 27
+  tag: 28
+  upper_memb: 29
+  lower_memb: 30
+  OL: 4
+  PA: 2
+  PC: 3
+  MEMB: 26
+  peptid: 6
